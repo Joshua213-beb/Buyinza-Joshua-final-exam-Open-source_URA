@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Payer</title>
+    <link rel="stylesheet" href="y.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+
+    <h2 class="text-center"> TAX PAYER REGISTRATION</h2>
+    <div class="container">
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-md-8">
+                    <!-- Feel free to delete the paragraph after implementation -->
+                    <p>    <div class="container">
+                        <div class="jumbotron"> 
+                            <h2 class="text-center">URA TAX PAYERS PORTAL</h2>
+                
+                            <form id="payerForm" onsubmit="generateTIN(); return false;">
+                                <label for="payerName">Payer's Name:</label>
+                                <input type="text" id="payerName" name="payerName" required>
+                
+                                <label for="dob">Date of Birth:</label>
+                                <input type="date" id="dob" name="dob" required>
+                
+                                <label for="occupation">Occupation:</label>
+                                <input type="text" id="occupation" name="occupation" required>
+                
+                                <label for="gender">Gender:</label>
+                                <select id="gender" name="gender" required>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                
+                                <label for="phone">Phone Number:</label>
+                                <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required placeholder="Enter a 10-digit phone number">
+                
+                                <label for="email">Email Address:</label>
+                                <input type="email" id="email" name="email" required>
+                
+                                <label for="annualIncome">Expected Annual Income:</label>
+                                <input type="number" id="annualIncome" name="annualIncome" required>
+                
+                                <button type="submit">Register</button>
+                            </form>
+                        </div>
+                    </div>
+                
+                    <script>
+                        function generateTIN() {
+                            // Extract values from the form
+                            const name = document.getElementById('payerName').value;
+                            const gender = document.getElementById('gender').value;
+                            const dob = document.getElementById('dob').value.split('-');
+                            
+                            // Generate TIN number (format: YYYY/G/MMDD)
+                            const tinNumber = `${new Date().getFullYear()}/${gender.charAt(0).toUpperCase()}/${dob[1]}${dob[2]}`;
+                            
+                            // Display TIN number in an alert
+                            alert(`Congratulations, ${name}! Your TIN number is: ${tinNumber}`);
+                        }
+                    </script></p>
+                </div>
+                <div class="col-md-4">
+                        <form class="form-inline pt-10">
+                          <input class="form-control mr-sm-2" type="search" placeholder="ENTER TIN" aria-label="Search"> <br><br>
+                          <button class="btn btn-success" type="submit">SEARCH PAYER</button>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="jumbotron">
+            <h3 class="text-center">REGISTERED TAX PAYERS</h3>
+            <div class="row">
+                <!-- Feel free to delete the paragraph after implementation -->
+                <p>    <div class="container">
+                    <div class="jumbotron"> 
+                        <h2 class="text-center">Tax Payers</h2>
+            
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Date of Birth</th>
+                                    <th>Occupation</th>
+                                    <th>Gender</th>
+                                    <th>Phone Number</th>
+                                    <th>Email</th>
+                                    <th>Annual Income</th>
+                                </tr>
+                            </thead>
+                            <tbody id="taxPayersTableBody">
+                                <!-- Tax payers data will be dynamically added here -->
+                            </tbody>
+                        </table>
+            
+                        <div class="text-center">
+                            <button onclick="showPrevious()">Previous</button>
+                            <button onclick="showNext()">Next</button>
+                        </div>
+                    </div>
+                </div>
+            
+                <script>
+                    // Sample data for demonstration purposes
+                    const taxPayersData = [
+                        { id: 1, name: 'Joshua Buyinza', dob: '1990-01-15', occupation: 'Engineer', gender: 'Male', phone: '0708008834', email: 'buyinzajoshua608@gmail.com', income: 5000000 },
+                        // Add more sample data as needed
+                    ];
+            
+                    const rowsPerPage = 10;
+                    let currentPage = 0;
+            
+                    function displayTaxPayers() {
+                        const tableBody = document.getElementById('taxPayersTableBody');
+                        tableBody.innerHTML = ''; // Clear previous data
+            
+                        const startIndex = currentPage * rowsPerPage;
+                        const endIndex = startIndex + rowsPerPage;
+            
+                        for (let i = startIndex; i < endIndex && i < taxPayersData.length; i++) {
+                            const taxpayer = taxPayersData[i];
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>${taxpayer.id}</td>
+                                <td>${taxpayer.name}</td>
+                                <td>${taxpayer.dob}</td>
+                                <td>${taxpayer.occupation}</td>
+                                <td>${taxpayer.gender}</td>
+                                <td>${taxpayer.phone}</td>
+                                <td>${taxpayer.email}</td>
+                                <td>${taxpayer.income}</td>
+                            `;
+                            tableBody.appendChild(row);
+                        }
+                    }
+            
+                    function showPrevious() {
+                        if (currentPage > 0) {
+                            currentPage--;
+                            displayTaxPayers();
+                        }
+                    }
+            
+                    function showNext() {
+                        const totalPages = Math.ceil(taxPayersData.length / rowsPerPage);
+                        if (currentPage < totalPages - 1) {
+                            currentPage++;
+                            displayTaxPayers();
+                        }
+                    }
+            
+                    // Initial display
+                    displayTaxPayers();
+                </script></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row text-center">
+        <a class="btn btn-primary" href="index.html">BACK HOME</a>
+    </div>
+    
+</body>
+</html>

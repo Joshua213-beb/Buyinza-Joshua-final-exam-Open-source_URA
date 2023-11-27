@@ -1,0 +1,74 @@
+/* Reset some default styles */
+body,
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+}
+
+/* Global styles */
+.container {
+  margin-top: 20px;
+}
+
+.jumbotron {
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* Card styles */
+.card {
+  margin: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.card-text {
+  color: #555;
+}
+
+/* Button styles */
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* Header styles */
+h2 {
+  color: #007bff;
+  margin-bottom: 20px;
+}
+

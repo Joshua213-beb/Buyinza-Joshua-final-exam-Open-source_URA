@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Asset</title>
+    
+    <link rel="stylesheet" href="y.csss">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body >
+    <h2 class="text-center"> ASSET REGISTRATION</h2>
+    <div class="container">
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-md-8">
+                    <!-- Feel free to delete the paragraph after implementation -->
+                    <p>    <div class="container" >
+                        <div class="jumbotron"> 
+                            <h2 class="text-center">Asset Registration</h2>
+                
+                            <form id="assetForm" onsubmit="generateAssetCode(); return false;" >
+                                <label for="assetName">Asset Name:</label>
+                                <input type="text" id="assetName" name="assetName" required>
+                
+                                <label for="estimatedCost">Estimated Cost:</label>
+                                <input type="number" id="estimatedCost" name="estimatedCost" required>
+                
+                                <label for="ownersTIN">Owner's TIN:</label>
+                                <input type="text" id="ownersTIN" name="ownersTIN" pattern="[0-9]{4}/[MF]/[0-9]{6}" required placeholder="e.g., 2023/M/010123">
+                
+                                <label for="assetType">Type (Fixed/Movable):</label>
+                                <select id="assetType" name="assetType" required>
+                                    <option value="fixed">Fixed</option>
+                                    <option value="movable">Movable</option>
+                                </select>
+                
+                                <button type="submit">Register Asset</button>
+                            </form>
+                        </div>
+                    </div>
+                
+                    <script>
+                        function generateAssetCode() {
+                            // Extract values from the form
+                            const assetName = document.getElementById('assetName').value;
+                            const ownersTIN = document.getElementById('ownersTIN').value;
+                            const assetType = document.getElementById('assetType').value;
+                
+                            // Extract the last three digits from TIN
+                            const lastThreeDigits = ownersTIN.slice(-3);
+                
+                            // Generate Asset Code (format: A<lastThreeDigits><randomNumber>)
+                            const assetCode = `A${lastThreeDigits}${Math.floor(Math.random() * 1000)}`;
+                
+                            // Display Asset Code in an alert
+                            alert(`Asset "${assetName}" registered successfully!\nAsset Code: ${assetCode}`);
+                        }
+                    </script></p>
+                </div>
+                <div class="col-md-4">
+                        <form class="form-inline pt-10">
+                          <input class="form-control mr-sm-2" type="search" placeholder="ENTER ASSET CODE" aria-label="Search"> <br><br>
+                          <button class="btn btn-success" type="submit">SEARCH ASSET</button>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="jumbotron">
+            <h3 class="text-center">REGISTERED ASSETS</h3>
+            <div class="row">
+                <!-- Feel free to delete the paragraph after implementation -->
+                <p>    <div class="container">
+                    <div class="jumbotron"> 
+                        <h2 class="text-center">Asset Management</h2>
+            
+                        <label for="search">Search Asset:</label>
+                        <input type="text" id="search" oninput="searchAssets()" placeholder="Enter asset name">
+            
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Estimated Cost</th>
+                                    <th>Owner's TIN</th>
+                                    <th>Type</th>
+                                    <th>Asset Code</th>
+                                </tr>
+                            </thead>
+                            <tbody id="assetsTableBody">
+                                <!-- Asset data will be dynamically added here -->
+                            </tbody>
+                        </table>
+            
+                        <div class="text-center">
+                            <button onclick="showPrevious()">Previous</button>
+                            <button onclick="showNext()">Next</button>
+                        </div>
+                    </div>
+                </div>
+            
+                <script>
+                    // Sample data for demonstration purposes
+                    const assetsData = [
+                        { id: 1, name: 'Laptop', cost: 1200, ownersTIN: '2023/M/010123', type: 'Movable', code: 'A123456789' },
+                        { id: 2, name: 'Building', cost: 150000, ownersTIN: '2023/F/010456', type: 'Fixed', code: 'A987654321' },
+                        // Add more sample data as needed
+                    ];
+            
+                    const rowsPerPage = 10;
+                    let currentPage = 0;
+            
+                    function displayAssets() {
+                        const tableBody = document.getElementById('assetsTableBody');
+                        tableBody.innerHTML = ''; // Clear previous data
+            
+                        const startIndex = currentPage * rowsPerPage;
+                        const endIndex = startIndex + rowsPerPage;
+            
+                        for (let i = startIndex; i < endIndex && i < assetsData.length; i++) {
+                            const asset = assetsData[i];
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>${asset.id}</td>
+                                <td>${asset.name}</td>
+                                <td>${asset.cost}</td>
+                                <td>${asset.ownersTIN}</td>
+                                <td>${asset.type}</td>
+                                <td>${asset.code}</td>
+                            `;
+                            tableBody.appendChild(row);
+                        }
+                    }
+            
+                    function showPrevious() {
+                        if (currentPage > 0) {
+                            currentPage--;
+                            displayAssets();
+                        }
+                    }
+            
+                    function showNext() {
+                        const totalPages = Math.ceil(assetsData.length / rowsPerPage);
+                        if (currentPage < totalPages - 1) {
+                            currentPage++;
+                            displayAssets();
+                        }
+                    }
+            
+                    function searchAssets() {
+                        const searchInput = document.getElementById('search').value.toLowerCase();
+                        const filteredAssets = assetsData.filter(asset => asset.name.toLowerCase().includes(searchInput));
+                        currentPage = 0;
+                        assetsData.length = 0;
+                        assetsData.push(...filteredAssets);
+                        displayAssets();
+                    }
+            
+                    // Initial display
+                    displayAssets();
+                </script></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row text-center">
+        <a class="btn btn-primary" href="index.html">BACK HOME</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset transfer</title>
+    <link rel="stylesheet" href="y.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+    <h2 class="text-center"> ASSET TRANSFER</h2>
+    <div class="container">
+        <div class="jumbotron">
+            <div class="row">
+                
+                    <!-- Feel free to delete the paragraph after implementation -->
+                    <p>    <div class="container">
+                        <div class="jumbotron"> 
+                            <h2 class="text-center">Asset Transfer</h2>
+                
+                            <form id="assetTransferForm" onsubmit="confirmTransfer(); return false;">
+                                <label for="assetCode">Asset Code:</label>
+                                <input type="text" id="assetCode" name="assetCode" required>
+                
+                                <label for="newOwnerTIN">Transfer to (New Owner's TIN):</label>
+                                <input type="text" id="newOwnerTIN" name="newOwnerTIN" pattern="[0-9]{4}/[MF]/[0-9]{6}" required placeholder="e.g., 2023/M/010123">
+                
+                                <button type="submit">Confirm Transfer</button>
+                            </form>
+                        </div>
+                    </div>
+                
+                    <script>
+                        function confirmTransfer() {
+                            // Extract values from the form
+                            const assetCode = document.getElementById('assetCode').value;
+                            const newOwnerTIN = document.getElementById('newOwnerTIN').value;
+                
+                            // You would typically perform server-side operations here to fetch asset details
+                            // and update the database with the new owner information.
+                            // For simplicity, let's assume we have some sample data.
+                            const assetDetails = {
+                                name: 'Sample Asset',
+                                currentOwner: 'John Doe',
+                                newOwner: 'New Owner',
+                            };
+                
+                            // Display confirmation alert
+                            const confirmationMessage = `Asset Name: ${assetDetails.name}\nCurrent Owner: ${assetDetails.currentOwner}\nNew Owner: ${assetDetails.newOwner}`;
+                            const isConfirmed = confirm(confirmationMessage);
+                
+                            if (isConfirmed) {
+                                // You would perform the actual database update here on the server-side.
+                                // For demonstration, we're redirecting to index.html.
+                                window.location.href = 'index.html';
+                            }
+                        }
+                    </script></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row text-center">
+        <a class="btn btn-primary" href="index.html">BACK HOME</a>
+    </div>
+</body>
+</html>
